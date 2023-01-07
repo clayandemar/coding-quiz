@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Coding Quiz</title>
+  <link href="style2.css" rel="stylesheet" />
+</head>
+
+<body>
+  <h1>Quiz</h1>
+  <div id="questions"> Welcome to Clay's coding game! When you click the "Begin Test" button, the questions and answers
+    will show:</div>
+  <div id="qAndAText" style="display:none">
+
+    <ul>
+      <li><input id="answer1" type="radio" name="buttonAnswer" onclick="gradeAnswer()"><span id="q1a1">answer 1</span>
+      </li>
+      <li><input id="answer2" type="radio" name="buttonAnswer" onclick="gradeAnswer()"><span id="q1a2">answer 2</span>
+      </li>
+      <li><input id="answer3" type="radio" name="buttonAnswer" onclick="gradeAnswer()"><span id="q1a3">answer 3</span>
+      </li>
+      <li><input id="answer4" type="radio" name="buttonAnswer" onclick="gradeAnswer()"><span id="q1a4">answer 4</span>
+      </li>
+    </ul>
+
+    <div id="countdown" class="timer">60</div>
+  </div>
+  <button id="beginButton" onclick="beginQuiz()">Begin Test</button>
+  <div id="winMessage" style="display:none">Congratulations you finished! Write your name to be added to the
+    leaderboard. 
+    <div><input id="playerName"type="text"></div>
+    <button onclick="submitName()">Submit</button>
+  </div>
+  <div id="leaderboard" style="display:none">
+    Leaderboard:
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+
+</html>
