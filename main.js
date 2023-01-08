@@ -1,17 +1,8 @@
+//global variables
+
 var qnumber = 0
 
-// var timeEl = document.querySelector(".time");
-
 var numberCount = 60;
-
-// var questionsDiv = document.getElementById("questions");
-
-// var answerLiTag = document.getAnimations("answerList");
-
-
-
-
-
 
 //Begin the quiz
 function beginQuiz() {
@@ -39,6 +30,51 @@ var questions = [
       { text: "<type>", correct: false },
       { text: "<input>", correct: false },
       { text: "<script>", correct: true },
+    ]
+  },
+  {
+    question: "Where do you reference your CSS file in your HTML",
+    answers: [
+      { text: "<head>", correct: true },
+      { text: "<header>", correct: false },
+      { text: "<body>", correct: false },
+      { text: "<script>", correct: false },
+    ]
+  },
+  {
+    question: "What's it the smallest possible <h> tag can you have",
+    answers: [
+      { text: "4", correct: false },
+      { text: "6", correct: true },
+      { text: "8", correct: false },
+      { text: "10", correct: false },
+    ]
+  },
+  {
+    question: "How do you create a new variable in JavaScript?",
+    answers: [
+      { text: "new xxx", correct: false },
+      { text: "new var xxx", correct: false },
+      { text: "var xxx", correct: true },
+      { text: "function var xxx", correct: false },
+    ]
+  },
+  {
+    question: "What does JSON stand for?",
+    answers: [
+      { text: "JavaScript Object Notation", correct: true },
+      { text: "Java Subject Oriented Notification", correct: false },
+      { text: "JavaScript Object Notification", correct: false },
+      { text: "Java Subject Oriented Notation", correct: false },
+    ]
+  },
+  {
+    question: "Which is a proper file name for CSS?",
+    answers: [
+      { text: "script.Java", correct: false },
+      { text: "main.html", correct: false },
+      { text: "style.css", correct: true },
+      { text: "css.js", correct: false },
     ]
   },
 
@@ -83,34 +119,33 @@ function showQuestion() {
 
 
 }
-console.log(questions);
+
 //question is answered and is captured, determined if right or wrong, then next question appears
 function gradeAnswer() {
   var right = false;
-  var userAnswer = document.getElementById("answer1");
   if (document.getElementById("answer1").checked) {
-    console.log("first answer clicked")
     if (questions[qnumber].answers[0].correct)
       right = true;
   }
-  userAnswer = document.getElementById("answer2");
   if (document.getElementById("answer2").checked) {
-    console.log("second answer clicked")
     if (questions[qnumber].answers[1].correct)
       right = true;
   }
-  userAnswer = document.getElementById("answer3");
   if (document.getElementById("answer3").checked) {
-    console.log("third answer clicked")
     if (questions[qnumber].answers[2].correct)
       right = true;
   }
-  userAnswer = document.getElementById("answer4");
   if (document.getElementById("answer4").checked) {
-    console.log("fourth answer clicked")
     if (questions[qnumber].answers[3].correct)
       right = true;
-  }
+  } 
+
+  // reset all answers to unchecked
+  document.getElementById("answer1").checked = false;
+  document.getElementById("answer2").checked = false;
+  document.getElementById("answer3").checked = false;
+  document.getElementById("answer4").checked = false;
+
   // Once all questions have been answered, go to quizComplete
   qnumber++;
   if (qnumber > questions.length - 1)
@@ -125,14 +160,14 @@ function gradeAnswer() {
 }
 
 //quiz ends and user is able to write their name to be put into the leaderboard
-
+//if timer runs out
 function quizForcedEnd() {
   clearInterval(handler);
   var audio = new Audio("Assets/YouLose.mp3");
   audio.play();
 
 }
-
+// if time doesn't run out
 function quizComplete() {
   clearInterval(handler);
   document.getElementById("winMessage").style.display = "block";
@@ -146,13 +181,14 @@ function submitName() {
   var nameSubmitted = document.getElementById("playerName").value;
   var quizScore = (numberCount + 40);
   var quizLeaderboard = localStorage.getItem("Quiz Leaderboard");
-  quizLeaderboard = quizLeaderboard + nameSubmitted + "   " + quizScore + "   ,";
-  localStorage.setItem("Quiz Leaderboard", quizLeaderboard);
+  var leaderboardArray = JSON.parse(quizLeaderboard);
   var leaderboardElement = document.getElementById("leaderboard");
+  if (!leaderboardArray)
+    leaderboardArray = [];
+  leaderboardArray.push({ name: nameSubmitted, score: quizScore });
   leaderboardElement.style.display = "block";
-  leaderboardElement.innerHTML = quizLeaderboard;
-
-
+  localStorage.setItem("Quiz Leaderboard", JSON.stringify(leaderboardArray));
+  for (i = 0; i < leaderboardArray.length; i++) {
+    leaderboardElement.innerHTML += "<p>" + leaderboardArray[i].name +  "   " + leaderboardArray[i].score +  "</p>";
+  }
 }
-
-
